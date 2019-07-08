@@ -123,4 +123,47 @@ public class DiameterTest {
         assertEquals(5, diameter.getDiameter());
         diameter.printPath();
     }
+
+    @Test
+    public void testDiameterVeryComplexGraph() {
+        System.out.println("testDiameterVeryComplexGraph");
+        Vertex g = new Vertex("g");
+        Vertex h = new Vertex("h");
+        Vertex i = new Vertex("i");
+        Vertex j = new Vertex("j");
+        Vertex k = new Vertex("k");
+        Vertex l = new Vertex("l");
+        Vertex m = new Vertex("m");
+        Vertex n = new Vertex("n");
+        a.connectVertex(b);
+        a.connectVertex(f);
+        b.connectVertex(c);
+        c.connectVertex(f);
+        c.connectVertex(e);
+        e.connectVertex(d);
+        e.connectVertex(f);
+        f.connectVertex(g);
+        f.connectVertex(h);
+        f.connectVertex(j);
+        g.connectVertex(h);
+        h.connectVertex(i);
+        h.connectVertex(m);
+        i.connectVertex(l);
+        i.connectVertex(k);
+        i.connectVertex(j);
+        l.connectVertex(m);
+        l.connectVertex(n);
+        m.connectVertex(n);
+        vertexList.add(g);
+        vertexList.add(h);
+        vertexList.add(i);
+        vertexList.add(j);
+        vertexList.add(k);
+        vertexList.add(l);
+        vertexList.add(m);
+        vertexList.add(n);
+        Diameter diameter = new Diameter(vertexList);
+        assertEquals(5, diameter.getDiameter());
+        diameter.printPath();
+    }
 }

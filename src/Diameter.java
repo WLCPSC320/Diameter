@@ -6,10 +6,10 @@ import java.util.ArrayList;
 
 public class Diameter {
     private ArrayList<Vertex> vertexList;
-    private ArrayList<Pair<Vertex,Vertex>> exploredPaths;
+    private ArrayList<Pair<Vertex,Vertex>> exploredPaths; // Prevents re-searching and searching for paths that aren't solutions
     private int diameter;
-    private String starting;
-    private String ending;
+    private String starting; // Starting node for distance
+    private String ending; // Ending node for distance (Arbitrary which one is start/end)
 
     public Diameter(ArrayList<Vertex> vertexList) {
         this.vertexList = vertexList;
@@ -19,6 +19,8 @@ public class Diameter {
         exploredPaths = new ArrayList<>();
     }
 
+    // MODIFIES: this
+    // EFFECTS: Returns the diameter
     public int getDiameter() {
         int retval = 0;
 
@@ -46,6 +48,7 @@ public class Diameter {
         return retval;
     }
 
+    // EFFECTS: Returns the shortest distance between start and dest
     private int getShortestDistance(Vertex start, Vertex dest, ArrayList<Vertex> traversedVertex) {
         ArrayList<Edge> startEdgeList = start.getEdgeList(); // Get Edgelist or neighbours
         int retval = 1000; //Dummy return value
@@ -60,6 +63,7 @@ public class Diameter {
                     int temp = 1 + getShortestDistance(next, dest, newTraversed); //get the shortest distance to destination
                     if (retval > temp) { // If our return value is greater than shortest distance for vertex to dest
                         retval = temp; // Replace with shortest for all neighbour vertex visited so far
+                        exploredPaths.add(new Pair(next, dest));
                     }
                 }
             }
@@ -67,6 +71,7 @@ public class Diameter {
         return retval; // retval is the shortest distance from start to dest
     }
 
+    // EFFECTS: Returns true if edgeList contains dest, else false
     private Boolean containsEdgeDest(ArrayList<Edge> edgeList, Vertex dest) {
         for (Edge e: edgeList) {
             if (e.hasVertex(dest)) {
@@ -76,6 +81,7 @@ public class Diameter {
         return false;
     }
 
+    // EFFECTS: Returns true if vertexList contains compareV, else false
     private Boolean containsVertex(ArrayList<Vertex> vertexList, Vertex compareV) {
         for (Vertex v: vertexList) {
             if (v.equals(compareV)) {
@@ -85,6 +91,7 @@ public class Diameter {
         return false;
     }
 
+    // EFFECTS: Copies a list returning the copied list
     private ArrayList<Vertex> copyTraversed(ArrayList<Vertex> traversed) {
         ArrayList<Vertex> retval = new ArrayList<>();
         for (Vertex v: traversed) {
@@ -93,6 +100,7 @@ public class Diameter {
         return retval;
     }
 
+    // EFFECTS: Returns true if path from start to dest has been explored, else false
     private Boolean isExplored(Vertex start, Vertex dest) {
         for (Pair<Vertex,Vertex> pair : exploredPaths) {
             if ((pair.getKey() == start && pair.getValue() == dest) || (pair.getKey() == dest && pair.getValue() == start)) {
@@ -102,6 +110,7 @@ public class Diameter {
         return false;
     }
 
+    // EFFECTS: Prints out the start, end and diameter to console
     public void printPath() {
         System.out.println("Start Node: " + starting + ", End Node: " + ending + ", Diameter = " + diameter + ".");
     }

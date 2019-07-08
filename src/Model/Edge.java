@@ -11,10 +11,12 @@ public class Edge {
         vertexB = b;
     }
 
+    // EFFECTS: returns true if an endpoint contains v
     public Boolean hasVertex(Vertex v) {
         return v.equals(vertexA) || v.equals(vertexB);
     }
 
+    // EFFECTS: returns the endpoint of the edge that is not v
     public Vertex getEndpoint(Vertex v) {
         if (v.equals(vertexA)) {
             return vertexB;
@@ -23,6 +25,7 @@ public class Edge {
         }
     }
 
+    // EFFECTS: returns both endpoints as a pair
     public Pair<Vertex, Vertex> getVertex() {
         Pair retval = new Pair(vertexA, vertexB);
         return retval;
